@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 8639256477998345893}
   - component: {fileID: 795931373432462060}
   - component: {fileID: 3656740029540349813}
+  - component: {fileID: 583284677}
+  - component: {fileID: 583284676}
   m_Layer: 0
   m_Name: SharkJumping 1
   m_TagString: Untagged
@@ -92,13 +94,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 079f71fb16a23874987eea4eb2ace665, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0
+  linearSpeed: -0.35
+  animationTime: 0.65
+  jumpHeightMult: 2
   heightCurve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
-      time: 0
-      value: 0
+      time: 0.0039634705
+      value: 1.0024719
       inSlope: 0.030284073
       outSlope: 0.030284073
       tangentMode: 0
@@ -107,7 +111,7 @@ MonoBehaviour:
       outWeight: 0.19485995
     - serializedVersion: 3
       time: 0.49995834
-      value: 1.0024717
+      value: -0.0023653507
       inSlope: 0.024427127
       outSlope: 0.024427127
       tangentMode: 0
@@ -115,8 +119,8 @@ MonoBehaviour:
       inWeight: 0.33333334
       outWeight: 0.15310964
     - serializedVersion: 3
-      time: 1.000011
-      value: 0.002357483
+      time: 0.99887127
+      value: -0.99863803
       inSlope: -0.000012918245
       outSlope: -0.000012918245
       tangentMode: 0
@@ -148,8 +152,8 @@ MonoBehaviour:
       inWeight: 0.33333334
       outWeight: 0.15310964
     - serializedVersion: 3
-      time: 0.5001404
-      value: 0.000078082085
+      time: 0.35261384
+      value: 0.0041806116
       inSlope: -4.7230587
       outSlope: -4.7230587
       tangentMode: 0
@@ -177,3 +181,50 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!50 &583284677
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5136149348194353360}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 0
+  m_CollisionDetection: 1
+  m_Constraints: 0
+--- !u!61 &583284676
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5136149348194353360}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 9.18, y: 5.19}
+    newSize: {x: 9.18, y: 5.19}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 9.18, y: 5.19}
+  m_EdgeRadius: 0
