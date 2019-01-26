@@ -331,7 +331,10 @@ MonoBehaviour:
   player: {fileID: 877102788}
   destination: {fileID: 1475703122}
   progressSlider: {fileID: 501862510}
-  showScore: {fileID: 0}
+  wreckageScore: 
+  survivorScore: 
+  wreckageUI: {fileID: 0}
+  survivorUi: {fileID: 0}
   survivors: 0
   wreckageNum: 0
 --- !u!1 &550336166
@@ -1466,7 +1469,7 @@ GameObject:
   - component: {fileID: 1822830938}
   m_Layer: 0
   m_Name: Player (1)
-  m_TagString: Wreckage
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1639,7 +1642,10 @@ MonoBehaviour:
   player: {fileID: 877102788}
   destination: {fileID: 1475703122}
   progressSlider: {fileID: 501862510}
-  showScore: {fileID: 0}
+  wreckageScore: 
+  survivorScore: 
+  wreckageUI: {fileID: 1394180370}
+  survivorUi: {fileID: 0}
   survivors: 0
   wreckageNum: 0
 --- !u!4 &1953720158
