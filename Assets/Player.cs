@@ -26,20 +26,24 @@ public class Player : MonoBehaviour
         }
     }
 
-    
-
-    public void playerJump() {
-        StopAllCoroutines();
-        StartCoroutine(AnimateMove(heightCurve, 0.5f));
-        StartCoroutine(AnimateMove2(RotationCurve, 0.5f));
+    public void StopPlayerIntroAnimation() {
+        GetComponent<Animator>().enabled = false;
     }
 
 
-    IEnumerator AnimateMove(AnimationCurve Curve,float totalTime)
+
+    public void playerJump() {
+        StopAllCoroutines();
+        StartCoroutine(AnimateHeight(heightCurve, 0.5f));
+        StartCoroutine(AnimateRotate(RotationCurve, 0.5f));
+    }
+
+
+    IEnumerator AnimateHeight(AnimationCurve Curve,float totalTime)
     {
         float timer = 0;
         while (timer<=totalTime) {
-            transform.Translate(0, 1*(Curve.Evaluate(timer / totalTime)/4), 0, Space.World);
+            transform.Translate(0, 1*(Curve.Evaluate(timer / totalTime)), 0, Space.World);
             timer += Time.deltaTime;
             yield return new WaitForFixedUpdate();
 
@@ -49,7 +53,7 @@ public class Player : MonoBehaviour
     }
 
 
-    IEnumerator AnimateMove2(AnimationCurve Curve, float totalTime)
+    IEnumerator AnimateRotate(AnimationCurve Curve, float totalTime)
     {
         float timer = 0;
         while (timer <=totalTime)

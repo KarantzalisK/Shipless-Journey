@@ -4,16 +4,88 @@ using UnityEngine;
 
 public class Shark : MonoBehaviour
 {
-    public float speed;
+    public float linearSpeed=-0.35f;
+    public float animationTime = 0.5f;
+    public float jumpHeightMult = 2;
+    private float startY;
+    private float startX;
+    public AnimationCurve heightCurve;
+    public AnimationCurve RotationCurve;
+    private bool onAir=false;
+    public static bool gameStarted = false;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        startY = transform.position.y;
+        startX = transform.position.x;
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (!onAir && gameStarted)
+        {
+            transform.Translate(linearSpeed, 0, 0);
+        }
+        //if (Input.GetKey(KeyCode.P) && startY == transform.position.y)
+        //{
+        //    SharkJump();
+        //}
     }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.tag.Equals("JumpPosition")) {
+            onAir = true;
+            SharkJump();
+            
+        }
+    }
+
+    public void SharkJump()
+    {
+        StopAllCoroutines();
+        StartCoroutine(AnimateHeight(heightCurve, animationTime));
+        StartCoroutine(AnimateRotate(RotationCurve, animationTime));
+    }
+
+
+    IEnumerator AnimateHeight(AnimationCurve Curve, float totalTime)
+    {
+        float timer = 0;
+        while (timer <= totalTime)
+        {
+            transform.Translate(linearSpeed, 1 * (Curve.Evaluate(timer / totalTime)/jumpHeightMult), 0, Space.World);
+            timer += Time.deltaTime;
+            yield return new WaitForFixedUpdate();
+
+        }
+       // transform.position = new Vector2(transform.position.x, startY);
+
+    }
+
+
+    IEnumerator AnimateRotate(AnimationCurve Curve, float totalTime)
+    {
+        float timer = 0;
+        while (timer <= totalTime)
+        {
+            transform.Rotate(0, 0, -1 * (Curve.Evaluate(timer / totalTime) * 5));
+            Debug.Log(Curve.Evaluate(timer / totalTime));
+            timer += Time.deltaTime;
+            yield return new WaitForFixedUpdate();
+
+        }
+        transform.rotation = new Quaternion(0, 0, 0, 0);
+        transform.position = new Vector2(transform.position.x, startY);
+        onAir = false;
+    }
+
+    public void resetSharkPos() {
+        transform.position = new Vector2(startX,startY);
+
+    }
+
 }
