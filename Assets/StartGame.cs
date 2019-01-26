@@ -7,6 +7,10 @@ public class StartGame : MonoBehaviour
     public Animator woodUiAnimator;
     public GameObject PlayButtonUI;
     public Animator BoardAnimator;
+
+    private bool playButtonPressed = false;
+    private bool executedOnce = false;
+    private float timer=2f;
     public void StartGameButton()
     {
         PlayButtonUI.SetActive(false);
@@ -15,5 +19,24 @@ public class StartGame : MonoBehaviour
         woodUiAnimator.Play("WoodUiAnimationLeft");
         //epeita kaloume na erthei o paiktis apo aristera me ti sanida
         BoardAnimator.Play("BoardComeLeft");
+
+        playButtonPressed = true;
+        
     }
+
+    private void Update()
+    {
+        if (!executedOnce && playButtonPressed)
+        {
+            if (timer <= 0 )
+            {
+                Shark.gameStarted = true;
+                executedOnce = true;
+            }
+            else {
+                timer -= Time.deltaTime;
+            }
+        }
+    }
+
 }
