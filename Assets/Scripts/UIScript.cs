@@ -7,7 +7,8 @@ public class UIScript: MonoBehaviour
     float progressValue;
     public GameObject player,destination;
     public Slider progressSlider;
-    public Text showScore;
+    public string wreckageScore,survivorScore;
+    public Text wreckageUI, survivorUi;
     public int survivors = 0, wreckageNum=0;
     // Start is called before the first frame update
     void Start()
@@ -23,18 +24,22 @@ public class UIScript: MonoBehaviour
     void Update()
     {
         progressSlider.value =progressValue-destination.transform.position.x;
-
+        wreckageUI.text = wreckageScore;
+        survivorUi.text = survivorScore;
     }
     public void SurvivorCounter()
     {
         survivors++;
 
+        survivorScore = (survivors.ToString());
     }
     public void WreckageCounter()
     {
         wreckageNum++;
-    }
-    
+        wreckageScore = (wreckageNum.ToString());
 
     }
+
+
+}
 
