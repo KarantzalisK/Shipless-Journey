@@ -1,20 +1,35 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 public class ScoreAndInteraction : MonoBehaviour
-{ public UIScript uiScoreScript;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
+{
+    public GameObject LosePanel;
+    public GameObject PausePanel;
+    public GameObject EndPanel;
+    public Button PauseButtonUi;
+    public UIScript uiScoreScript;
+
+    public void PauseButton()
+    {
+        PausePanel.SetActive(true);
+        Time.timeScale = 0.0f;
+    }
+    public void ResumeButton()
     {
         
+        PausePanel.SetActive(false);
+        Time.timeScale = 1f;
     }
+    public void RestartButton()
+    {
+        Time.timeScale = 1f;
+        SceneManager.LoadScene(0);
+        PauseButtonUi.interactable = true;
+    }
+ 
     private void OnTriggerEnter2D(Collider2D coli)
     {
         Debug.Log("DOULEPSE");
@@ -37,7 +52,15 @@ public class ScoreAndInteraction : MonoBehaviour
         if (coli.gameObject.tag == "Enemy")
         {
             Time.timeScale = 0.0f;
-           
+            LosePanel.SetActive(true);
+            PauseButtonUi.interactable = false;
+        }
+
+        if (coli.gameObject.tag == "End")
+        {
+            Time.timeScale = 0.0f;
+            EndPanel.SetActive(true);
+            PauseButtonUi.interactable = false;
         }
     }
 }

@@ -30,7 +30,7 @@ public class ShipMovement : MonoBehaviour
 
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         if (gameStarted) transform.Translate(linearSpeed, 0, 0);
         if (canStartAnimation && !coroutineswitch) StartAnimation();

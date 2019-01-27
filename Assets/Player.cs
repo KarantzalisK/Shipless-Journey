@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
 public class Player : MonoBehaviour
 {
     // Start is called before the first frame update
@@ -24,13 +24,13 @@ public class Player : MonoBehaviour
     private bool lengthCoroutineIsRunning = false;
     private bool coroutineswitch = false;
     private bool rotateCouroutineFinished = false;
-
+    private Transform startedpos;
 
     public static bool gameStarted = false;
-
+    private bool takepos = true;
     private float Speed;
     public Swipe swipeControls;
-    private GameObject player;
+
     private Vector3 desiredPosition;
     private bool DotheJob = false;
     public bool UnlockClickAnywhere = true;
@@ -38,13 +38,18 @@ public class Player : MonoBehaviour
     void Start()
     {
         startY = transform.position.y;
+        takepos = true;
     }
 
     // Update is called once per frame
-    void FixedUpdate()
+    void Update()
     {
 
-
+        if (gameStarted && takepos)
+        {
+            startedpos = transform;
+                takepos = false;
+        }
         if (!animationIsplaying)
         {
             if (Input.GetKey(KeyCode.W) && startY == transform.position.y && gameStarted)
@@ -104,12 +109,18 @@ public class Player : MonoBehaviour
                     }
 
                 }
-                if (Input.GetMouseButtonDown(0) && gameStarted)
-                {
-                    CharAnimator.Play("CharAnimation");
-                    playerBody.enabled = false;
-                    playerBodyDucked.enabled = true;
-                }
+                
+                    if (Input.GetMouseButtonDown(0) && gameStarted)
+                    {
+                    
+                        
+                        CharAnimator.Play("CharAnimation");
+                        playerBody.enabled = false;
+                        playerBodyDucked.enabled = true;
+                    
+                    
+                    }
+                
                 if (Input.GetMouseButtonUp(0) && gameStarted && !animationIsplaying)
                 {
                     CharAnimator.Play("Idle");
@@ -203,7 +214,7 @@ public class Player : MonoBehaviour
         lengthCoroutineIsRunning = false;
         coroutineswitch = false;
         animationIsplaying = false;
-        
+        transform.position = new Vector2(startedpos.position.x, transform.position.y);
     }
 
  

@@ -11,10 +11,24 @@ public class StartGame : MonoBehaviour
     private bool playButtonPressed = false;
     private bool executedOnce = false;
     private float timer=2f;
+
+    void Awake()
+    {
+        Shark.gameStarted = false;
+        Player.gameStarted = false;
+        MovingShark.gameStarted = false;
+        Barel_Behav.gameStarted = false;
+        Bird_behavor.gameStarted = false;
+        EndIsland.gameStarted = false;
+        Rum.gameStarted = false;
+        RockMovement.gameStarted = false;
+    }
+    
     public void StartGameButton()
     {
         PlayButtonUI.SetActive(false);
         RockMovement.gameStarted = true;
+       
     }
 
     public void ShipWrecked()

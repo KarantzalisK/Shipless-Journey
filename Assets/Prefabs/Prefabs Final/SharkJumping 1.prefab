@@ -95,9 +95,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   linearSpeed: -0.15
-  animationTime: 0.65
-  jumpHeightDiv: 2
-  rotationMult: 5
+  animationTime: 1.5
+  jumpHeightDiv: 3
+  rotationMult: 4.5
   heightCurve:
     serializedVersion: 2
     m_Curve:
