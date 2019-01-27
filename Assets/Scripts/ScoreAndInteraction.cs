@@ -28,6 +28,11 @@ public class ScoreAndInteraction : MonoBehaviour
             coli.gameObject.SetActive(false);
             uiScoreScript.WreckageCounter();
 
+        }if (coli.gameObject.tag == "Rum")
+        {
+            coli.gameObject.SetActive(false);
+            uiScoreScript.rumCounter();
+
         }
         if (coli.gameObject.tag == "Enemy")
         {

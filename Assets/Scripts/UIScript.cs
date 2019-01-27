@@ -7,16 +7,18 @@ public class UIScript: MonoBehaviour
     float progressValue;
     public GameObject player,destination;
     public Slider progressSlider;
-    public string wreckageScore,survivorScore;
-    public Text wreckageUI, survivorUi;
-    public int survivors = 0, wreckageNum=0;
+    public string wreckageScore,survivorScore,rumScore;
+    public Text wreckageUI, survivorUi,rumUI;
+    public int survivors = 0, wreckageNum = 0, rumNUM = 0;
     // Start is called before the first frame update
     void Start()
     {
         progressSlider.minValue = player.transform.position.x;
         progressSlider.maxValue = destination.transform.position.x;
         progressValue = (destination.transform.position.x);
-
+        wreckageUI.text = wreckageScore;
+        survivorUi.text = survivorScore;
+        rumUI.text = rumScore;
 
     }
 
@@ -26,6 +28,7 @@ public class UIScript: MonoBehaviour
         progressSlider.value =progressValue-destination.transform.position.x;
         wreckageUI.text = wreckageScore;
         survivorUi.text = survivorScore;
+        rumUI.text = rumScore;
     }
     public void SurvivorCounter()
     {
@@ -38,6 +41,11 @@ public class UIScript: MonoBehaviour
         wreckageNum++;
         wreckageScore = (wreckageNum.ToString());
 
+    }
+    public void rumCounter()
+    {
+        rumNUM++;
+        rumScore = rumNUM.ToString();
     }
 
 
