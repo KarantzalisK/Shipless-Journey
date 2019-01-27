@@ -25,7 +25,7 @@ public class Shark : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         if (!onAir && gameStarted)
         {

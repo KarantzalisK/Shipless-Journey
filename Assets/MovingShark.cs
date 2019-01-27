@@ -25,7 +25,7 @@ public class MovingShark : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         if(gameStarted) transform.Translate(linearSpeed, 0, 0);
     }

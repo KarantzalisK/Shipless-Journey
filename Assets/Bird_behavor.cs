@@ -35,11 +35,10 @@ public class Bird_behavor : MonoBehaviour
 
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        if (gameStarted) transform.Translate(linearSpeed, 0, 0);
-        if (canStartAnimation && !coroutineswitch) StartAnimation();
-        if (canStartAnimation && coroutineswitch) StartAnimationInverted();
+        if (gameStarted && canStartAnimation && !coroutineswitch) StartAnimation();
+        if (gameStarted && canStartAnimation && coroutineswitch) StartAnimationInverted();
     }
 
     void StartAnimation()

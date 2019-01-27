@@ -5,10 +5,10 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     // Start is called before the first frame update
-
-    public GameObject playerBody;
-    public GameObject playerBodyDucked;
-
+    private bool animationIsplaying = false;
+    public Collider2D playerBody;
+    public Collider2D playerBodyDucked;
+    public Animator CharAnimator;
     public float linearSpeed = 0f;
     public float animationTime = 0.5f;
     public float jumpHeightDiv = 2;
@@ -28,27 +28,47 @@ public class Player : MonoBehaviour
 
     public static bool gameStarted = false;
 
+    private float Speed;
+    public Swipe swipeControls;
+    private GameObject player;
+    private Vector3 desiredPosition;
+    private bool DotheJob = false;
+    public bool UnlockClickAnywhere = true;
+
     void Start()
     {
         startY = transform.position.y;
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        if (Input.GetKey(KeyCode.W) && startY == transform.position.y && gameStarted)
+
+
+        if (!animationIsplaying)
         {
-            playerJump();
+            if (Input.GetKey(KeyCode.W) && startY == transform.position.y && gameStarted)
+            {
+                animationIsplaying = true;
+                playerJump();
+                playerBody.enabled = false;
+                playerBodyDucked.enabled = true;
+
+
+            }
         }
+        
         if (Input.GetKeyDown(KeyCode.S) && gameStarted)
         {
-            playerBody.SetActive(false);
-            playerBodyDucked.SetActive(true);
+            CharAnimator.Play("CharAnimation");
+            playerBody.enabled = false;
+            playerBodyDucked.enabled = true;
         }
         if (Input.GetKeyUp(KeyCode.S) && gameStarted)
         {
-            playerBody.SetActive(true);
-            playerBodyDucked.SetActive(false);
+            CharAnimator.Play("Idle");
+            
+
         }
         if (rotateCouroutineFinished && gameStarted && !lengthCoroutineIsRunning)
         {
@@ -61,6 +81,46 @@ public class Player : MonoBehaviour
             lengthCoroutineIsRunning = true;
 
         }
+
+        
+      
+        
+            
+                
+            
+            
+
+
+
+                if (!animationIsplaying)
+                {
+                    if (swipeControls.SwipeUp && startY == transform.position.y && gameStarted)
+                    {
+                        animationIsplaying = true;
+                        playerJump();
+                        playerBody.enabled = false;
+                        playerBodyDucked.enabled = true;
+
+                    }
+
+                }
+                if (Input.GetMouseButtonDown(0) && gameStarted)
+                {
+                    CharAnimator.Play("CharAnimation");
+                    playerBody.enabled = false;
+                    playerBodyDucked.enabled = true;
+                }
+                if (Input.GetMouseButtonUp(0) && gameStarted && !animationIsplaying)
+                {
+                    CharAnimator.Play("Idle");
+                    
+                    
+                }
+                
+            
+
+            
+        
     }
 
     public void StopPlayerIntroAnimation()
@@ -73,6 +133,7 @@ public class Player : MonoBehaviour
     public void playerJump()
     {
         StopAllCoroutines();
+        CharAnimator.Play("CharAnimation");
         StartCoroutine(AnimateHeight(heightCurve, animationTime));
         StartCoroutine(AnimateRotate(RotationCurve, animationTime));
     }
@@ -107,7 +168,10 @@ public class Player : MonoBehaviour
         transform.rotation = new Quaternion(0, 0, 0, 0);
         transform.position = new Vector2(transform.position.x, startY);
         rotateCouroutineFinished = true;
-
+        CharAnimator.Play("Idle");
+        playerBody.enabled = true;
+        playerBodyDucked.enabled = false;
+        
     }
 
     IEnumerator AnimateLength(AnimationCurve Curve, float totalTime)
@@ -116,14 +180,14 @@ public class Player : MonoBehaviour
         while (timer <= totalTime)
         {
             transform.Translate(1 * Curve.Evaluate(timer / totalTime) / jumpLengthDiv, 0, 0, Space.World);
-            timer += Time.deltaTime;
+            timer += Time.deltaTime * 4;
             yield return new WaitForFixedUpdate();
 
         }
         lengthCoroutineIsRunning = false;
         coroutineswitch = true;
         rotateCouroutineFinished = false;
-
+        
     }
 
     IEnumerator InvertedAnimateLength(AnimationCurve Curve, float totalTime)
@@ -132,17 +196,16 @@ public class Player : MonoBehaviour
         while (timer >= totalTime / 2)
         {
             transform.Translate(1 * Curve.Evaluate(timer / totalTime) / jumpLengthDiv / 1.5f, 0, 0, Space.World);
-            timer -= Time.deltaTime;
+            timer -= Time.deltaTime * 4;
             yield return new WaitForFixedUpdate();
 
         }
         lengthCoroutineIsRunning = false;
         coroutineswitch = false;
+        animationIsplaying = false;
+        
     }
 
-    public void playerDuck()
-    {
-
-    }
-
+ 
+    
 }

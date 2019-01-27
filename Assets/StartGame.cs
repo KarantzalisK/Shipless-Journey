@@ -40,8 +40,10 @@ public class StartGame : MonoBehaviour
                 MovingShark.gameStarted = true;
                 Barel_Behav.gameStarted = true;
                 Bird_behavor.gameStarted = true;
-                FindObjectOfType<RockMovement>().linearSpeed = -0.05f;
-
+                EndIsland.gameStarted = true;
+                Rum.gameStarted = true;
+                FindObjectOfType<RockMovement>().linearSpeed = -0.15f;
+                FindObjectOfType<UIScript>().GetPositionsOfPlayerAndEnd();
 
                 executedOnce = true;
             }

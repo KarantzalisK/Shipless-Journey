@@ -9,6 +9,8 @@ TagManager:
   - Enemy
   - JumpPosition
   - Ship
+  - Rum
+  - End
   layers:
   - Default
   - TransparentFX

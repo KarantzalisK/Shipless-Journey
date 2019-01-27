@@ -37,11 +37,11 @@ public class Barel_Behav : MonoBehaviour
 
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        if (gameStarted) transform.Translate(linearSpeed, 0, 0);
-        if (canStartAnimation && !coroutineswitch ) StartAnimation();
-        if (canStartAnimation && coroutineswitch ) StartAnimationInverted();
+        //if (gameStarted) transform.Translate(linearSpeed, 0, 0);
+        if (canStartAnimation && !coroutineswitch && gameStarted) StartAnimation();
+        if (canStartAnimation && coroutineswitch && gameStarted) StartAnimationInverted();
     }
 
     void StartAnimation()

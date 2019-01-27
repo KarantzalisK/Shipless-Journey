@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 5802741807737469923}
   m_Layer: 0
   m_Name: BarrelBad 1
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -94,7 +94,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.69, y: 0.39}
+  m_Offset: {x: 0.5372639, y: 0.123950005}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -105,7 +105,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 2.38, y: 2.33}
+  m_Size: {x: 15.600189, y: 22.399149}
   m_EdgeRadius: 0
 --- !u!114 &5802741807737469923
 MonoBehaviour:
@@ -119,3 +119,39 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 994158f4cdb490a418014f30a3c80589, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  linearSpeed: -0.15
+  animationTime: 2
+  jumpHeightDiv: 8
+  animationCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: -0.1
+      inSlope: 0.2
+      outSlope: 0.2
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.5
+      value: 0
+      inSlope: 0.16566
+      outSlope: 0.16566
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.2238875
+      outWeight: 0.27786475
+    - serializedVersion: 3
+      time: 1
+      value: 0.1
+      inSlope: 0.12641399
+      outSlope: 0.12641399
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.18864894
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4

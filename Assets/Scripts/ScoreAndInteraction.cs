@@ -18,11 +18,11 @@ public class ScoreAndInteraction : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D coli)
     {
         Debug.Log("DOULEPSE");
-        if (coli.gameObject.tag == "Survivor")
-        {
-            coli.gameObject.SetActive(false);
-            uiScoreScript.SurvivorCounter();
-        }
+        //if (coli.gameObject.tag == "Survivor")
+        //{
+        //    coli.gameObject.SetActive(false);
+        //    uiScoreScript.SurvivorCounter();
+        //}
         if (coli.gameObject.tag == "Wreckage")
         {
             coli.gameObject.SetActive(false);
@@ -37,6 +37,7 @@ public class ScoreAndInteraction : MonoBehaviour
         if (coli.gameObject.tag == "Enemy")
         {
             Time.timeScale = 0.0f;
+           
         }
     }
 }
