@@ -6,7 +6,9 @@ public class Shark : MonoBehaviour
 {
     public float linearSpeed=-0.35f;
     public float animationTime = 0.5f;
-    public float jumpHeightMult = 2;
+    public float jumpHeightDiv = 2;
+    public float rotationMult = 5;
+
     private float startY;
     private float startX;
     public AnimationCurve heightCurve;
@@ -41,7 +43,12 @@ public class Shark : MonoBehaviour
             onAir = true;
             SharkJump();
             
+        }else if (collision.gameObject.tag.Equals("Player")){
+                Debug.Log("hit Hard");
+                //SoundManager.Instance.PlayOneShot(SoundManager.Instance.hitBarrel);
+                GameObject.Find("ScriptManager").GetComponent<GameManager>().PlayerGotHit();
         }
+        
     }
 
     public void SharkJump()
@@ -57,7 +64,7 @@ public class Shark : MonoBehaviour
         float timer = 0;
         while (timer <= totalTime)
         {
-            transform.Translate(linearSpeed, 1 * (Curve.Evaluate(timer / totalTime)/jumpHeightMult), 0, Space.World);
+            transform.Translate(linearSpeed, 1 * (Curve.Evaluate(timer / totalTime)/jumpHeightDiv), 0, Space.World);
             timer += Time.deltaTime;
             yield return new WaitForFixedUpdate();
 
@@ -72,7 +79,7 @@ public class Shark : MonoBehaviour
         float timer = 0;
         while (timer <= totalTime)
         {
-            transform.Rotate(0, 0, -1 * (Curve.Evaluate(timer / totalTime) * 5));
+            transform.Rotate(0, 0, -1 * (Curve.Evaluate(timer / totalTime) * rotationMult));
             Debug.Log(Curve.Evaluate(timer / totalTime));
             timer += Time.deltaTime;
             yield return new WaitForFixedUpdate();

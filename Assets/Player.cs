@@ -6,11 +6,26 @@ public class Player : MonoBehaviour
 {
     // Start is called before the first frame update
 
-    
+    public GameObject playerBody;
+    public GameObject playerBodyDucked;
+
+    public float linearSpeed = 0f;
+    public float animationTime = 0.5f;
+    public float jumpHeightDiv = 2;
+    public float rotationMult = 5;
+    public float jumpLengthDiv = 2;
     public float mult = 1F;
     public AnimationCurve heightCurve;
     public AnimationCurve RotationCurve;
+    public AnimationCurve lengthCurve;
     private float startY;
+    private float startX;
+
+    private bool lengthCoroutineIsRunning = false;
+    private bool coroutineswitch = false;
+
+
+    public static bool gameStarted = false;
 
     void Start()
     {
@@ -20,9 +35,26 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.Translate(0, 0, 0);
-        if (Input.GetKey(KeyCode.W)&&startY==transform.position.y) {
+        if (Input.GetKey(KeyCode.W)&&startY==transform.position.y&& gameStarted) {
             playerJump();
+        }
+        if (Input.GetKeyDown(KeyCode.S) && gameStarted) {
+            playerBody.SetActive(false);
+            playerBodyDucked.SetActive(true);
+        }
+        if (Input.GetKeyUp(KeyCode.S) && gameStarted) {
+            playerBody.SetActive(true);
+            playerBodyDucked.SetActive(false);
+        }
+        if (Input.GetKey(KeyCode.Z) && gameStarted && !lengthCoroutineIsRunning )
+        {
+            StartCoroutine(AnimateLength(lengthCurve, animationTime));
+            lengthCoroutineIsRunning = true;
+        }
+        if (gameStarted && !lengthCoroutineIsRunning && coroutineswitch) {
+            StartCoroutine(InvertedAnimateLength(lengthCurve, animationTime));
+            lengthCoroutineIsRunning = true;
+
         }
     }
 
@@ -34,8 +66,8 @@ public class Player : MonoBehaviour
 
     public void playerJump() {
         StopAllCoroutines();
-        StartCoroutine(AnimateHeight(heightCurve, 0.5f));
-        StartCoroutine(AnimateRotate(RotationCurve, 0.5f));
+        StartCoroutine(AnimateHeight(heightCurve, animationTime));
+        StartCoroutine(AnimateRotate(RotationCurve, animationTime));
     }
 
 
@@ -43,7 +75,7 @@ public class Player : MonoBehaviour
     {
         float timer = 0;
         while (timer<=totalTime) {
-            transform.Translate(0, 1*(Curve.Evaluate(timer / totalTime)), 0, Space.World);
+            transform.Translate(0, 1*Curve.Evaluate(timer / totalTime)/ jumpHeightDiv, 0, Space.World);
             timer += Time.deltaTime;
             yield return new WaitForFixedUpdate();
 
@@ -58,7 +90,7 @@ public class Player : MonoBehaviour
         float timer = 0;
         while (timer <=totalTime)
         {
-            transform.Rotate(0,0, 1 * (Curve.Evaluate(timer / totalTime)*5));
+            transform.Rotate(0,0, 1 * (Curve.Evaluate(timer / totalTime)* rotationMult));
             Debug.Log(Curve.Evaluate(timer / totalTime));
             timer += Time.deltaTime;
             yield return new WaitForFixedUpdate();
@@ -69,6 +101,34 @@ public class Player : MonoBehaviour
 
     }
 
+    IEnumerator AnimateLength(AnimationCurve Curve, float totalTime)
+    {
+        float timer = 0;
+        while (timer <= totalTime)
+        {
+            transform.Translate(1 * Curve.Evaluate(timer / totalTime) / jumpLengthDiv, 0, 0, Space.World);
+            timer += Time.deltaTime;
+            yield return new WaitForFixedUpdate();
+
+        }
+        lengthCoroutineIsRunning = false;
+        coroutineswitch = true;
+
+    }
+
+    IEnumerator InvertedAnimateLength(AnimationCurve Curve, float totalTime)
+    {
+        float timer = totalTime;
+        while (timer >= totalTime/2)
+        {
+            transform.Translate(1 * Curve.Evaluate(timer / totalTime) / jumpLengthDiv/1.5f, 0, 0, Space.World);
+            timer -= Time.deltaTime;
+            yield return new WaitForFixedUpdate();
+
+        }
+        lengthCoroutineIsRunning = false;
+        coroutineswitch = false;
+    }
 
     public void playerDuck() {
 

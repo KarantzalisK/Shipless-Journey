@@ -4,15 +4,17 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
+    public GameObject loseText;
+
+    //Method in which you can have life and counting other Stuff
+    public void PlayerGotHit() {
+
+        Lose();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+    //show lose menu etc...
+    private void Lose() {
+        loseText.SetActive(true);
     }
+
 }

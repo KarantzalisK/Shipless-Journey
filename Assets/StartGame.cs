@@ -31,6 +31,10 @@ public class StartGame : MonoBehaviour
             if (timer <= 0 )
             {
                 Shark.gameStarted = true;
+                Player.gameStarted = true;
+                MovingShark.gameStarted = true;
+                Barel_Behav.gameStarted = true;
+                Bird_behavor.gameStarted = true;
                 executedOnce = true;
             }
             else {
