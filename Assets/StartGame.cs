@@ -14,6 +14,12 @@ public class StartGame : MonoBehaviour
     public void StartGameButton()
     {
         PlayButtonUI.SetActive(false);
+        RockMovement.gameStarted = true;
+    }
+
+    public void ShipWrecked()
+    {
+        PlayButtonUI.SetActive(false);
 
         //Afou stoukareis me petra kai vithistei to ploio paizeis to parakatw animation
         woodUiAnimator.Play("WoodUiAnimationLeft");
@@ -21,7 +27,6 @@ public class StartGame : MonoBehaviour
         BoardAnimator.Play("BoardComeLeft");
 
         playButtonPressed = true;
-        
     }
 
     private void Update()
@@ -35,6 +40,9 @@ public class StartGame : MonoBehaviour
                 MovingShark.gameStarted = true;
                 Barel_Behav.gameStarted = true;
                 Bird_behavor.gameStarted = true;
+                FindObjectOfType<RockMovement>().linearSpeed = -0.05f;
+
+
                 executedOnce = true;
             }
             else {

@@ -5,7 +5,7 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public GameObject loseText;
-
+    
     //Method in which you can have life and counting other Stuff
     public void PlayerGotHit() {
 

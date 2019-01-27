@@ -8,6 +8,7 @@ TagManager:
   - Survivor
   - Enemy
   - JumpPosition
+  - Ship
   layers:
   - Default
   - TransparentFX

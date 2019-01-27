@@ -23,6 +23,7 @@ public class Player : MonoBehaviour
 
     private bool lengthCoroutineIsRunning = false;
     private bool coroutineswitch = false;
+    private bool rotateCouroutineFinished = false;
 
 
     public static bool gameStarted = false;
@@ -35,47 +36,54 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKey(KeyCode.W)&&startY==transform.position.y&& gameStarted) {
+        if (Input.GetKey(KeyCode.W) && startY == transform.position.y && gameStarted)
+        {
             playerJump();
         }
-        if (Input.GetKeyDown(KeyCode.S) && gameStarted) {
+        if (Input.GetKeyDown(KeyCode.S) && gameStarted)
+        {
             playerBody.SetActive(false);
             playerBodyDucked.SetActive(true);
         }
-        if (Input.GetKeyUp(KeyCode.S) && gameStarted) {
+        if (Input.GetKeyUp(KeyCode.S) && gameStarted)
+        {
             playerBody.SetActive(true);
             playerBodyDucked.SetActive(false);
         }
-        if (Input.GetKey(KeyCode.Z) && gameStarted && !lengthCoroutineIsRunning )
+        if (rotateCouroutineFinished && gameStarted && !lengthCoroutineIsRunning)
         {
             StartCoroutine(AnimateLength(lengthCurve, animationTime));
             lengthCoroutineIsRunning = true;
         }
-        if (gameStarted && !lengthCoroutineIsRunning && coroutineswitch) {
+        if (gameStarted && !lengthCoroutineIsRunning && coroutineswitch)
+        {
             StartCoroutine(InvertedAnimateLength(lengthCurve, animationTime));
             lengthCoroutineIsRunning = true;
 
         }
     }
 
-    public void StopPlayerIntroAnimation() {
+    public void StopPlayerIntroAnimation()
+    {
         GetComponent<Animator>().enabled = false;
     }
 
 
 
-    public void playerJump() {
+    public void playerJump()
+    {
         StopAllCoroutines();
         StartCoroutine(AnimateHeight(heightCurve, animationTime));
         StartCoroutine(AnimateRotate(RotationCurve, animationTime));
     }
 
 
-    IEnumerator AnimateHeight(AnimationCurve Curve,float totalTime)
+    IEnumerator AnimateHeight(AnimationCurve Curve, float totalTime)
     {
         float timer = 0;
-        while (timer<=totalTime) {
-            transform.Translate(0, 1*Curve.Evaluate(timer / totalTime)/ jumpHeightDiv, 0, Space.World);
+        while (timer <= totalTime)
+        {
+            transform.Translate(0, 1 * Curve.Evaluate(timer / totalTime) / jumpHeightDiv, 0, Space.World);
             timer += Time.deltaTime;
             yield return new WaitForFixedUpdate();
 
@@ -88,16 +96,17 @@ public class Player : MonoBehaviour
     IEnumerator AnimateRotate(AnimationCurve Curve, float totalTime)
     {
         float timer = 0;
-        while (timer <=totalTime)
+        while (timer <= totalTime)
         {
-            transform.Rotate(0,0, 1 * (Curve.Evaluate(timer / totalTime)* rotationMult));
+            transform.Rotate(0, 0, 1 * (Curve.Evaluate(timer / totalTime) * rotationMult));
             Debug.Log(Curve.Evaluate(timer / totalTime));
             timer += Time.deltaTime;
             yield return new WaitForFixedUpdate();
 
         }
-        transform.rotation = new Quaternion(0,0,0,0);
+        transform.rotation = new Quaternion(0, 0, 0, 0);
         transform.position = new Vector2(transform.position.x, startY);
+        rotateCouroutineFinished = true;
 
     }
 
@@ -113,15 +122,16 @@ public class Player : MonoBehaviour
         }
         lengthCoroutineIsRunning = false;
         coroutineswitch = true;
+        rotateCouroutineFinished = false;
 
     }
 
     IEnumerator InvertedAnimateLength(AnimationCurve Curve, float totalTime)
     {
         float timer = totalTime;
-        while (timer >= totalTime/2)
+        while (timer >= totalTime / 2)
         {
-            transform.Translate(1 * Curve.Evaluate(timer / totalTime) / jumpLengthDiv/1.5f, 0, 0, Space.World);
+            transform.Translate(1 * Curve.Evaluate(timer / totalTime) / jumpLengthDiv / 1.5f, 0, 0, Space.World);
             timer -= Time.deltaTime;
             yield return new WaitForFixedUpdate();
 
@@ -130,7 +140,8 @@ public class Player : MonoBehaviour
         coroutineswitch = false;
     }
 
-    public void playerDuck() {
+    public void playerDuck()
+    {
 
     }
 
